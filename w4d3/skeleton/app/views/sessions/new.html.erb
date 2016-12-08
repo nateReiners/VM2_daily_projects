@@ -1,0 +1,19 @@
+<h1>Log In</h1>
+
+
+<form action="/session" method="post">
+
+  <label for="username">Username</label>
+  <input id="username" type="text" name="user[username]">
+
+  <label for="password">Enter Password</label>
+  <input id="password" type="text" name="user[password]">
+
+  <input type="submit"  value="Enter">
+
+  <%= flash[:messages] %>
+
+
+</form>
+
+<!-- <%#= render partial: "shared", action: '/session', method: 'post', user: @user  %> -->
