@@ -46,17 +46,9 @@
 
 	const DOMNodeCollection = __webpack_require__(1);
 	
-	window.$l = arg => {
-	  switch(typeof(arg)){
-	    case "function":
-	      return registerDocReadyCallback(arg);
-	    case "string":
-	      return getNodesFromDom(arg);
-	    case "object":
-	      if(arg instanceof HTMLElement){
-	        return new DomNodeCollection([arg]);
-	      }
-	  }
+	window.$l = (arg) => {
+	  this.elementList = document.querySelectorAll(arg);
+	  this.elementArray = Array.from(this.elementList);
 	};
 
 
