@@ -42,27 +42,81 @@
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
+
+	const Router = __webpack_require__(1);
+	const Inbox = __webpack_require__(2);
+
+	const routes = {
+	  inbox: Inbox,
+	};
 
 	document.addEventListener("DOMContentLoaded", function() {
 
 
 	  $(".sidebar-nav").on("click", "li", handleLiClick);
 
-	  
 	  function handleLiClick (event) {
-	    let text = $(event.currentTarget).text();
-	    alert(text);
-	  }
-	  // bindDelegate("ul.sidebar-nav", "click", "li", handleLiClick(this));
-
-	  // function bindDelegate(rootSelector, eventName, subSelector, handler) {
-	  //   $(rootSelector).on(eventName, function(e) {
-	  //     alert("hello");
-	  //   });
-	  // }
+	    let text = $(event.currentTarget).text().toLowerCase();
+	    window.location.hash = text;
+	    let contentNode = document.querySelector(".content");
+	    let newRouter = new Router(contentNode, routes);
+	    newRouter.start();
+	  };
 
 	});
+
+
+/***/ },
+/* 1 */
+/***/ function(module, exports) {
+
+	class Router {
+	  constructor(node, routes) {
+	    this.node = node;
+	    this.routes = routes;
+	  }
+
+	  start() {
+	      this.render();
+	      document.addEventListener("hashchange", function() {
+	      this.render();
+	    });
+	  }
+
+	  render() {
+	    this.node.innerHTML = "";
+	    let component = this.activeRoute();
+	    if (component) {
+	      this.node.appendChild(component.render());
+	    }
+	  }
+
+	  activeRoute() {
+	    let route =  window.location.hash.slice(1);
+	    return this.routes[route];
+	  }
+	}
+
+
+	module.exports = Router;
+
+
+/***/ },
+/* 2 */
+/***/ function(module, exports) {
+
+	const Inbox = {
+	  render() {
+	    let newUlNode = document.createElement("ul");
+	    newUlNode.className = "messages";
+	    newUlNode.innerHTML = "An Inbox Message";
+	    return newUlNode;
+	  }
+	}
+
+
+	module.exports = Inbox;
 
 
 /***/ }
