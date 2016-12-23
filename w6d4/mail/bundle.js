@@ -104,13 +104,18 @@
 
 /***/ },
 /* 2 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
+
+	const MessageStore = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"./message_store.js\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
 
 	const Inbox = {
 	  render() {
 	    let newUlNode = document.createElement("ul");
 	    newUlNode.className = "messages";
-	    newUlNode.innerHTML = "An Inbox Message";
+	    MessageStore.getInboxMessages().forEach((message) => {
+	      newUlNode.innerHTML = this.renderMessage(message);
+	    })
+
 	    return newUlNode;
 	  }
 	}
