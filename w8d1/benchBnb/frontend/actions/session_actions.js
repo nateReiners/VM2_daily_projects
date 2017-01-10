@@ -19,8 +19,6 @@ export const logout = (user) => dispatch => (
     .then(user => dispatch(receiveCurrentUser(null)))
 );
 
-
-
 export const receiveCurrentUser = (currentUser) => ({
   type: RECEIVE_CURRENT_USER,
   currentUser
